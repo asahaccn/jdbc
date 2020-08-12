@@ -1,0 +1,141 @@
+                 -----------JDBC BASIC TUTORIAL -------
+
+ Java Data Base Connectivity is the way of connecting frontend software wriiten in java with
+ backened database , the connection between application and database is done using drivers , therE
+ are four types of drivers. While connection with database we can fetch and insert data.
+
+
+                    The Driver details of all the databases are given below:
+
+RDBMS 	  JDBC driver name 	              URL format
+MySQL 	  com.mysql.jdbc.Driver 	      jdbc:mysql://hostname/ databaseName
+ORACLE 	  oracle.jdbc.driver.OracleDriver     jdbc:oracle:thin:@hostname:port Number:databaseName
+
+ How to establish the connection between froentend and database i.e JDBC
+
+     // We Are Using Oracle SQL
+     //Let us understand the connection in simple language.
+ 1. Import the package
+      java.sql.* ( to import all the classes and interface of sql package )
+    
+ 2. Load and Register the driver
+      divided into 2 steps :
+      first load:
+       download eclipse ide --> install it for java developers --> new--> Java project --> click on java project --> create class, name it and save it --> 
+       --> click on project ---> build path ---> add C:\oraclexe\app\oracle\product\10.2.0\server\jdbc\lib\ojdbc_14.jar
+            
+       then register:
+        then register it in program by using class.forName("oracle.jdbc.driver.OracleDriver") // forName belongs to the Class Class
+        
+ 3  Establish the connection
+        we will establish the connection using Connection interface , we need to instantiate the Connection object 
+
+ 4. create the statement 
+         Now, there are three types of statement 
+         1. Normal Statement : when you want to execute a query we can execute it by using statement object
+         2. Prepared Statement : when we have a query which is inbuild already prepared and have differnt values we use prepared statement.
+         3. Callable Statement : when we want to excute query for pl sql we use callable satement , this is for stored procedure.
+
+ 5. execute the query
+          once the statement is created , we execute the query either fetch data from the database or insert into it.
+
+ 6. process result
+          we will get the result either in form of tyable , if we ferch data then oalso get the result in form of table depending on the query executed 
+           or insert  data then also get reult in form of table.
+
+ 7. close the connection.
+           we will close the connection bny getting the object of Connection and Statement.
+
+
+
+      // Let us understannd the connection in programming terms:
+    
+   1. Import the package
+      java.sql.* ( to import all the classes and interface of sql package )
+
+   2a. load the driver according to steps given above
+   2b. register it by
+      Class.forName("oracle.jdbc.driver.OracleDriver")
+      //
+
+   3. Establish the connection
+       Connection con = DriverManger getConnection("URL" , "USERNAME" , "PASSWORD")\
+      /*
+          Connection is an interface and we need to instantiate the object of Connection
+          so, getConnection() method which is static and belongs to DriverManger Class 
+          and is used to instantiate the con object . Inside the getConnection method we pass the 
+          url i.e if we are using mysql then there are many databases , maybe the system is connected with
+         other system and database so we need to specify it that we are using localhost and then
+         followed by user name and password.
+          
+    */
+
+  4. Create Statement 
+       Statement st = con.CreateStatement();
+       /*we use the con object to call CreateStatement() method which instantiate the Statement object st.*/
+
+  5. Execute the query  
+      ResultSet rs = st.executeQuery(Select * from Student);
+      here , ResultSet contains the result ehich we are executing the query select * from Student we need to store
+      the result somewhere that is ResultSet and rs is the object of ResultSet
+
+  6. Process result
+       table Student
+        -->  roll | name
+           1     Alex
+           2     Chris
+           3     Mark
+          
+     at start we will have the pointer on roll | name
+       rs.next() shifts it to first coloumn
+           so we can get the result by
+                 rs.getInt(1) + " " + rs.getString(2);  /*we will get the 1 Alex*/
+            again repeat the step rs.next() to set the pointer to next line 2 and Chris
+             then get the result by  rs.getInt(1) + " " + rs.getString(2); /*we will get the 2 Chris*/
+              but this is not recommed instead we will use while loop
+                
+            while(rs.next()) // it shifts the pointer and then checks whether rs.next() if yes then print statement.
+                  {
+                       System.out.println( rs.getInt(1) + " " + rs.getString(2));
+
+                     }
+
+      
+   7. Finally close the connect  by getting Statement object and Connection object
+              st.close();
+              con.close();
+
+
+
+
+
+  // The Program
+
+      There are seven of them from first.java to seventh.java
+
+      The table created is Students 
+
+         create table student (id number(10), name varchar(30));
+
+       select * from student ; // would gives us the final table as follows
+        
+        
+        ID NAME
+---------- ------------------------------
+         1 Alex
+         2 Chris
+         3 Mark
+         4 Martin
+         5 Tom
+         6 Max
+
+
+
+                                 --------------Thank You --------------
+
+
+
+
+           
+
+     
